@@ -1,4 +1,29 @@
 
+<?php
+
+require_once 'includes/db.php';
+
+// Retrieve events and calculate remaining places
+$sql = "SELECT
+            e.event_id,
+            e.event_name,
+            e.description,
+            e.capacity,
+            e.event_date,
+            e.capacity - (
+                SELECT COUNT(*)
+                FROM bookings b
+                WHERE b.event_id = e.event_id
+            ) AS places_left
+        FROM EVENTS e
+        ORDER BY e.event_date";
+
+$stmt = $pdo->query($sql);
+
+$events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,50 +56,51 @@
 
         <div class="event-grid">
 
-            <article class="event-card">
-                <p class="event-category">PROGRAMMING</p>
-                <h3>Introduction to Python</h3>
-                <p>Learn the fundamentals of Python programming, including variables, loops and functions.</p>
-                <p class="event-date">1 December 2026 · 10:00</p>
-                <p class="event-capacity">15 places available</p>
-                <a class="main-button" href="login.php">Sign in to book</a>
-            </article>
+            <?php foreach ($events as $event): ?>
 
-            <article class="event-card">
-                <p class="event-category">WEB DEVELOPMENT</p>
-                <h3>Web Development Workshop</h3>
-                <p>Explore HTML, CSS and PHP while learning how modern websites are developed.</p>
-                <p class="event-date">3 December 2026 · 13:00</p>
-                <p class="event-capacity">12 places available</p>
-                <a class="main-button" href="login.php">Sign in to book</a>
-            </article>
+                <article class="event-card">
 
-            <article class="event-card">
-                <p class="event-category">CYBERSECURITY</p>
-                <h3>Cybersecurity Fundamentals</h3>
-                <p>An introduction to cybersecurity concepts, online safety and common security threats.</p>
-                <p class="event-date">5 December 2026 · 11:00</p>
-                <p class="event-capacity">20 places available</p>
-                <a class="main-button" href="login.php">Sign in to book</a>
-            </article>
+                    <h3>
+                        <?= htmlspecialchars($event['event_name']) ?>
+                    </h3>
 
-            <article class="event-card">
-                <p class="event-category">DATABASES</p>
-                <h3>Database Design Seminar</h3>
-                <p>Learn about relational databases, SQL queries, primary keys and foreign keys.</p>
-                <p class="event-date">8 December 2026 · 14:00</p>
-                <p class="event-capacity">10 places available</p>
-                <a class="main-button" href="login.php">Sign in to book</a>
-            </article>
+                    <p>
+                        <?= htmlspecialchars($event['description']) ?>
+                    </p>
 
-            <article class="event-card">
-                <p class="event-category">SYSTEM ADMINISTRATION</p>
-                <h3>Linux Administration</h3>
-                <p>Explore Linux commands, file permissions, package management and system administration.</p>
-                <p class="event-date">10 December 2026 · 10:00</p>
-                <p class="event-capacity">15 places available</p>
-                <a class="main-button" href="login.php">Sign in to book</a>
-            </article>
+                    <p class="event-date">
+                        <?= date('j F Y · H:i', strtotime($event['event_date'])) ?>
+                    </p>
+
+                    <p class="event-capacity">
+
+                        <?php if ($event['places_left'] > 0): ?>
+
+                            <?= (int) $event['places_left'] ?> places available
+
+                        <?php else: ?>
+
+                            Fully booked
+
+                        <?php endif; ?>
+
+                    </p>
+
+                    <?php if ($event['places_left'] > 0): ?>
+
+                        <a class="main-button" href="login.php">
+                            Sign in to book
+                        </a>
+
+                    <?php else: ?>
+
+                        <span class="event-full">No places remaining</span>
+
+                    <?php endif; ?>
+
+                </article>
+
+            <?php endforeach; ?>
 
         </div>
     </main>

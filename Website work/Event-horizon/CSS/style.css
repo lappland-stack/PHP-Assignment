@@ -214,3 +214,13 @@ footer {
     }
 }
 
+.event-full {
+    display: inline-block;
+    padding: 10px;
+    margin-top: 8px;
+    color: #ff5555;
+    border: 1px solid #ff5555;
+    border-radius: 5px;
+    text-align: center;    
+    
+}
