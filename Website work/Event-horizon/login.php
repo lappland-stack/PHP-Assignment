@@ -1,4 +1,55 @@
 
+<?php
+
+require_once 'includes/db.php';
+
+session_start();
+
+$error = "";
+
+// Redirect users who are already logged in
+if (isset($_SESSION['user_id'])) {
+    header("Location: dashboard.php");
+    exit;
+}
+
+// Process the login form
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+
+    // Find the account using its username
+    $sql = "SELECT user_id, username, password_hash
+            FROM users
+            WHERE username = :username";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['username' => $username]);
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Check the password against the stored hash
+    if ($user && password_verify($password, $user['password_hash'])) {
+
+        session_regenerate_id(true);
+
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['username'] = $user['username'];
+
+        header("Location: dashboard.php");
+        exit;
+
+    } else {
+
+        $error = "Invalid username or password.";
+
+    }
+
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +79,16 @@
 
             <h2>Account Login</h2>
 
-            <form class="login-form" action="#" method="post">
+            <?php if ($error): ?>
+                <p class="login-notice">
+                    <?= htmlspecialchars($error) ?>
+                </p>
+            <?php endif; ?>
+
+            <form class="login-form" action="login.php" method="POST">
 
                 <label for="username">Username</label>
+
                 <input
                     type="text"
                     id="username"
@@ -40,6 +98,7 @@
                 >
 
                 <label for="password">Password</label>
+
                 <input
                     type="password"
                     id="password"
@@ -48,12 +107,7 @@
                     required
                 >
 
-                <div class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">Remember me</label>
-                </div>
-
-                <button class="main-button login-button" type="button">
+                <button class="main-button login-button" type="submit">
                     Sign In
                 </button>
 
@@ -65,7 +119,8 @@
             </p>
 
             <p class="login-back">
-                Not ready to sign in? <a href="events.php">Browse our events</a>.
+                Not ready to sign in?
+                <a href="events.php">Browse our events</a>.
             </p>
 
         </div>
