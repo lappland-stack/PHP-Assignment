@@ -2,6 +2,7 @@
 <?php
 
 require_once 'includes/db.php';
+require_once 'includes/auth.php';
 
 // Retrieve events and calculate remaining places
 $sql = "SELECT
@@ -54,6 +55,14 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p>Browse our upcoming technology workshops and find one that interests you.</p>
         </section>
 
+        <?php if (isset($_GET['error'])): ?>
+    
+            <p class="login-notice">
+                <?= htmlspecialchars($_GET['error']) ?>
+            </p>
+
+        <?php endif; ?>
+
         <div class="event-grid">
 
             <?php foreach ($events as $event): ?>
@@ -74,30 +83,47 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <p class="event-capacity">
 
-                        <?php if ($event['places_left'] > 0): ?>
+    <?php if ($event['places_left'] > 0): ?>
 
-                            <?= (int) $event['places_left'] ?> places available
+        <?= (int) $event['places_left'] ?> places available
 
-                        <?php else: ?>
+    <?php else: ?>
 
-                            Fully booked
+        Fully booked
 
-                        <?php endif; ?>
+    <?php endif; ?>
 
-                    </p>
+</p>
 
-                    <?php if ($event['places_left'] > 0): ?>
+<?php if ($event['places_left'] > 0): ?>
 
-                        <a class="main-button" href="login.php">
-                            Sign in to book
-                        </a>
+    <?php if (isset($_SESSION['user_id'])): ?>
 
-                    <?php else: ?>
+        <form action="book.php" method="POST">
+            <input
+                type="hidden"
+                name="event_id"
+                value="<?= (int) $event['event_id'] ?>"
+            >
 
-                        <span class="event-full">No places remaining</span>
+            <button class="main-button" type="submit">
+                Book this event
+            </button>
+        </form>
 
-                    <?php endif; ?>
+    <?php else: ?>
 
+        <a class="main-button" href="login.php">
+            Sign in to book
+        </a>
+
+    <?php endif; ?>
+
+<?php else: ?>
+
+    <span class="event-full">No places remaining</span>
+
+<?php endif; ?>
                 </article>
 
             <?php endforeach; ?>
