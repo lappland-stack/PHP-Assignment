@@ -43,11 +43,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p>Find your next opportunity to learn something new.</p>
     </header>
 
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="events.php">Events</a>
-        <a href="login.php">Login</a>
-    </nav>
+    <?php require_once 'includes/header.php'; ?>
 
     <main>
         <section>
