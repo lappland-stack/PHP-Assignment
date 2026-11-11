@@ -32,7 +32,7 @@ Figure 10 and 11 show the user booking the event and the event showing up in the
 
 
 test 5:
- In this test we will test a logged in user cancelling a booking. The suer should be able to simply press cancel booking and the booking should no longer be on their My Bookings page.
+ In this test we will test a logged in user cancelling a booking. The user should be able to simply press cancel booking and the booking should no longer be on their My Bookings page.
 
 Figures 12 and 13 show the booking system working as expected
 
