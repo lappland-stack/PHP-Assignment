@@ -1,0 +1,48 @@
+test 1:
+
+Testing to see wether navigation stays consistent between pages with the user logged in.
+Figure 2 shows the events page of the website only displayign 3 navigation options while a user is logged in, it should display 5, figures 3 and 4 show the extra pages that should be seen in the navigation bar of the website.
+
+This was fixed after realising that each page had a hardcoded <nav> block, and was fixed by making another php filed called header.php which holds all the navigation locations and has been used to replace all the navigation blocks of all relevant code and is shown to be working in figure 5.
+
+
+test 2:
+
+We are testing to see how the website reacts to valid and invalid credentials.
+
+figure 6 shows valid credentials, and is working as expected.
+
+figure 7 is showing invalid credentials and is also working as planned.
+
+
+test 3:
+
+Here we test full website navigation while logged in and logged out. A logged in user should see 5 navigation options (Home, Events, Dashboard, My Bookings and Logout) while a logged out suer should only see 3 options (Home, Events, Login).
+
+Figure 8 shows logged in user navigation working as expected.
+
+While figure 9 shows a logged out user, also working as expected.
+
+
+test 4:
+
+Here we test the booking functionality, here we should see a logged in user be able to book an event and that even to show up in the My Bookings section.
+
+Figure 10 and 11 show the user booking the event and the event showing up in the expected section.
+
+
+test 5:
+ In this test we will test a logged in user cancelling a booking. The suer should be able to simply press cancel booking and the booking should no longer be on their My Bookings page.
+
+Figures 12 and 13 show the booking system working as expected
+
+test 6:
+Here we log in as another user and check to see wether the website exposes another users bookings.
+
+Figure 14 shows the other user being unable to see the other users booking.
+(please not i did not do a full pent test and will not be doing a pen test for this assignment, but as far as i programmed this website it should not be vulnerable to sql injections or other types of attack that target the databse tied to this website)
+
+test 7:
+In this test we will see wether the website allows a user to book the same evvent twice, expected behaviour should not let the user book the same event twice
+
+figure 15 shows that a user cannot book the same event twice.

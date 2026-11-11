@@ -17,11 +17,7 @@
             <p>Explore technology. Learn new skills. Book your place.</p>
         </header>
 
-        <nav>
-            <a href="index.php">Home</a>
-            <a href="events.php">Events</a>
-            <a href="login.php">Login</a>
-        </nav>
+        <?php require_once 'includes/header.php'; ?>
 
         <main>
             <section>

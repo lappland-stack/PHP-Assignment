@@ -25,12 +25,7 @@ requireLogin();
         <p>Your personal event dashboard.</p>
     </header>
 
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="events.php">Events</a>
-        <a href="my-bookings.php">My Bookings</a>
-        <a href="logout.php">Logout</a>
-    </nav>
+   <?php require_once 'includes/header.php'; ?>
 
     <main>
 

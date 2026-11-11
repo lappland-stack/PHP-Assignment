@@ -45,13 +45,7 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p>Manage your upcoming technology workshops.</p>
     </header>
 
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="events.php">Events</a>
-        <a href="dashboard.php">Dashboard</a>
-        <a href="my-bookings.php">My Bookings</a>
-        <a href="logout.php">Logout</a>
-    </nav>
+     <?php require_once 'includes/header.php'; ?>
 
     <main>
 

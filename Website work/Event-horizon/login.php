@@ -68,11 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>Welcome back. Sign in to manage your bookings.</p>
     </header>
 
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="events.php">Events</a>
-        <a href="login.php">Login</a>
-    </nav>
+   <?php require_once 'includes/header.php'; ?>
 
     <main>
         <div class="login-container">
