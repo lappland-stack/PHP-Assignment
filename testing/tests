@@ -40,7 +40,7 @@ test 6:
 Here we log in as another user and check to see wether the website exposes another users bookings.
 
 Figure 14 shows the other user being unable to see the other users booking.
-(please not i did not do a full pent test and will not be doing a pen test for this assignment, but as far as i programmed this website it should not be vulnerable to sql injections or other types of attack that target the databse tied to this website)
+(please note i did not do a full pent test and will not be doing a pen test for this assignment, but as far as i programmed this website it should not be vulnerable to sql injections or other types of attack that target the databse tied to this website)
 
 test 7:
 In this test we will see wether the website allows a user to book the same evvent twice, expected behaviour should not let the user book the same event twice
